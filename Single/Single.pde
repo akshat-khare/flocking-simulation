@@ -24,7 +24,7 @@ class Boid {
 
   void go () {
     increment();
-    //wrap();
+    //wrap(); //to be included
     if (thinkTimer == 0 ) {
       // update our friend array (lots of square roots)
       getFriends();
@@ -118,7 +118,7 @@ class Boid {
         count++;
       }
       if (count > 0) {
-        //sum.div((float)count);
+        sum.div((float)count);
       }
     }
     return sum;
@@ -141,7 +141,7 @@ class Boid {
       }
     }
     if (count > 0) {
-      //steer.div((float) count);
+      steer.div((float) count);
     }
     return steer;
   }
@@ -162,6 +162,7 @@ class Boid {
         //count++;            // Keep track of how many
       }
     }
+    
     return steer;
   }
   
@@ -170,7 +171,7 @@ class Boid {
     return distance;
   }
   
-  // Avoid Walls
+  // Avoid Walls (to be improved)
   PVector getAvoidWalls () {
     //float desiredseparation = 25.0f;
     PVector steer = new PVector(0, 0, 0);
@@ -235,14 +236,15 @@ class Boid {
       sum.div(count);
       
       PVector desired = PVector.sub(sum, pos);  
-      return desired.setMag(0.05);
+      //return desired.setMag(0.05);
+      return desired;
     } 
     else {
       return new PVector(0, 0, 0);
     }
   }
 
-  void draw () {
+  void drawr () {
     for ( int i = 0; i < friends.size(); i++) {
       stroke(90);
       //line(this.pos.x, this.pos.y, f.pos.x, f.pos.y);
@@ -260,6 +262,48 @@ class Boid {
     vertex(-7* globalScale, 7* globalScale);
     vertex(-7* globalScale, -7* globalScale);
     endShape(CLOSE);
+    popMatrix();
+  }
+  
+  void draw() {
+    pushMatrix();
+    translate(pos.x, pos.y, pos.z);
+    //rotate(move.heading());
+    rotateX(move.x);
+    rotateY(move.y);
+    rotateZ(move.z);
+    stroke(0);
+    float t = 15*globalScale;
+    // this pyramid has 4 sides, each drawn as a separate triangle
+    // each side has 3 vertices, making up a triangle shape
+    // the parameter " t " determines the size of the pyramid
+    beginShape(TRIANGLES);
+  
+    fill(150, 0, 0, 100);
+    fill(shade, 90, 200);
+    vertex(-t, -t, -t);
+    vertex( t, -t, -t);
+    vertex( 0, 0, t);
+  
+    fill(0, 150, 0, 100);
+    fill(shade, 90, 200);
+    vertex( t, -t, -t);
+    vertex( t, t, -t);
+    vertex( 0, 0, t);
+  
+    fill(0, 0, 150, 100);
+    fill(shade, 90, 200);
+    vertex( t, t, -t);
+    vertex(-t, t, -t);
+    vertex( 0, 0, t);
+  
+    fill(150, 0, 150, 100);
+    fill(shade, 90, 200);
+    vertex(-t, t, -t);
+    vertex(-t, -t, -t);
+    vertex( 0, 0, t);
+  
+    endShape();
     popMatrix();
   }
 
