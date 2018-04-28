@@ -40,7 +40,7 @@ void setup () {
   println(width);
   println(boundary);
   int id = 0;
-  for (int i = 0; i < 100; i+= 1) {
+  for (int i = 0; i < 50; i+= 1) {
       id = id + 1;
       println("New Boid added with id:" +id);
       boids.add(new Boid(random(-50,50), random(-50,50), random(-50,50), id));
@@ -49,11 +49,11 @@ void setup () {
 
 // haha
 void recalculateConstants () {
-  maxSpeed = 0.5 * globalScale;
+  maxSpeed = 0.75 * globalScale;
   friendRadius = 10 * globalScale;
   crowdRadius = (friendRadius / 2);
-  avoidRadius = 10 * globalScale;
-  coheseRadius = friendRadius;
+  avoidRadius = 1.0 * globalScale;
+  coheseRadius = 2 * friendRadius;
 }
 
 

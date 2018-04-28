@@ -39,22 +39,22 @@ class Boid {
     PVector allign = getAverageDir();
     PVector avoidDir = getAvoidDir(); 
     PVector avoidObjects = getAvoidWalls();
-    PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
+    PVector noise = new PVector(random(1) - 1, random(1) - 1, random(1) - 1);
     PVector cohese = getCohesion();
 
     allign.mult(1.5);
     if (!option_friend) allign.mult(0);
     
-    avoidDir.mult(0.5);
+    avoidDir.mult(1.5);
     if (!option_crowd) avoidDir.mult(0);
     
-    avoidObjects.mult(3.0);
+    avoidObjects.mult(5.0);
     if (!option_avoid) avoidObjects.mult(0);
 
     noise.mult(0.1);
     if (!option_noise) noise.mult(0);
 
-    cohese.mult(1);
+    cohese.mult(1.0);
     if (!option_cohese) cohese.mult(0);
     
     stroke(0, 255, 160);
@@ -188,11 +188,11 @@ class Boid {
         // Calculate vector pointing away from the plane
         PVector targetPoint;
         if(plane[0]==1 || plane[0]==-1)
-          targetPoint = new PVector(plane[0]*(boundary/2), pos.y, pos.z);
+          targetPoint = new PVector(-plane[0]*(boundary/2), pos.y, pos.z);
         else if(plane[1]==1 || plane[1]==-1)
-          targetPoint = new PVector(pos.x, plane[1]*(boundary/2), pos.z);
+          targetPoint = new PVector(pos.x, -plane[1]*(boundary/2), pos.z);
         else
-          targetPoint = new PVector(pos.x, pos.y, plane[2]*(boundary/2));
+          targetPoint = new PVector(pos.x, pos.y, -plane[2]*(boundary/2));
         
         PVector diff = PVector.sub(pos, targetPoint);
         diff.normalize();
@@ -273,7 +273,7 @@ class Boid {
     rotateY(move.y);
     rotateZ(move.z);
     stroke(0);
-    float t = 15*globalScale;
+    float t = 7.5*globalScale;
     // this pyramid has 4 sides, each drawn as a separate triangle
     // each side has 3 vertices, making up a triangle shape
     // the parameter " t " determines the size of the pyramid
