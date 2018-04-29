@@ -6,7 +6,9 @@ Boundary box;
 
 float globalScale = .91;
 float eraseRadius = 20;
+int rotate = 1;
 String tool = "boids";
+String environment = "sphere";
 
 
 // boid control
@@ -14,6 +16,7 @@ float maxSpeed;
 float friendRadius;
 float crowdRadius;
 float avoidRadius;
+float avoidWallRadius;
 float coheseRadius;
 
 int boundary;
@@ -40,7 +43,6 @@ void setup () {
   boids = new ArrayList<Boid>();
   avoids = new ArrayList<Avoid>();
   setupWalls();
-  //println(width);
   println(boundary + " is boundary");
   int id = 0;
   for (int i = 0; i < 200; i+= 1) {
@@ -55,14 +57,14 @@ void setup () {
 
 // haha
 void recalculateConstants () {
-  println("globalScale is " +globalScale);
   //stroke(150);
-  //text(globalScale, boundary/2, boundary/2 );
+  text(globalScale, boundary/2, boundary/2 );
   maxSpeed = 1.5 * globalScale;
-  friendRadius = 60 * globalScale;
-  crowdRadius = (friendRadius / 5);
+  friendRadius = 40 * globalScale;
+  crowdRadius = (friendRadius / 2);
   avoidRadius = 20 * globalScale;
-  coheseRadius = friendRadius / 2;
+  avoidWallRadius = 80 * globalScale;
+  coheseRadius = 1.5 * friendRadius;
   //println("maxspeed is " +maxSpeed);
   //println("friendradius is " +friendRadius);
   //println("crowdRadius is " +crowdRadius);
@@ -74,7 +76,7 @@ void recalculateConstants () {
 
 
 void setupWalls() {
-  boundary = (int)(350 * globalScale);
+  boundary = (int)(400 * globalScale);
   box = new Boundary(boundary);
 }
 
@@ -111,7 +113,7 @@ void draw () {
   //} 
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
-    //println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
+    // println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
     current.go();
     current.drawit();
   }
@@ -158,11 +160,19 @@ void keyPressed () {
     option_noise = option_noise ? false : true;
     message("Turned noise " + on(option_noise));
   } else if (key == ',') {
-    setupWalls();
+    environment = "box";
   } else if (key == '.') {
-    setupCircle();
+    environment = "sphere";
+  } else if (key == 'r') {
+    rotate = (rotate+1)%2;
+  } else if (key == 'p') {
+    noLoop();
+  } else if (key == 's') {
+    redraw();
+  } else if (key == 'c') {
+    loop();
   }
-  //recalculateConstants();
+  recalculateConstants();
 }
 
 void drawGUI() {
