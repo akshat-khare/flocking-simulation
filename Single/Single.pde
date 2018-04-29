@@ -176,6 +176,7 @@ class Boid {
     // For every wall in the system, check if it's too close
     float planes[][] = {{-1,0,0,boundary/2},{1,0,0,boundary/2},{0,-1,0,boundary/2},{0,1,0,boundary/2},{0,0,-1,boundary/2},{0,0,1,boundary/2}};
     for (int i = 0; i < 6; i++) {
+      boolean isout = false;
       float plane[] = new float[4];
       for (int j = 0; j < 4; j++) {
         plane[j] = planes[i][j];
@@ -184,16 +185,37 @@ class Boid {
       if ((d > 0) && (d < avoidRadius)) {
         // Calculate vector pointing away from the plane
         PVector targetPoint;
-        if(plane[0]==1 || plane[0]==-1)
+        if(plane[0]==1 || plane[0]==-1){
+          if(abs(pos.x) > boundary/2){
+            isout = true;
+          }
           targetPoint = new PVector(-plane[0]*(boundary/2), pos.y, pos.z);
-        else if(plane[1]==1 || plane[1]==-1)
+        }
+        else if(plane[1]==1 || plane[1]==-1){
+          if(abs(pos.y) > boundary/2){
+            isout = true;
+          }
           targetPoint = new PVector(pos.x, -plane[1]*(boundary/2), pos.z);
-        else
+        }   
+        else{
+          if(abs(pos.z) > boundary/2){
+            isout = true;
+          }
           targetPoint = new PVector(pos.x, pos.y, -plane[2]*(boundary/2));
-        
-        PVector diff = PVector.sub(pos, targetPoint);
+        }
+        PVector diff;
+        if(isout){
+          diff = PVector.sub(targetPoint, pos);
+        }else{
+          diff = PVector.sub(pos, targetPoint);
+        }
         diff.normalize();
-        diff.div(d);        // Weight by distance
+        if(isout){
+          diff.mult(100*d);
+        }else{
+          diff.div(d);
+        }
+        //diff.div(d);        // Weight by distance
         steer.add(diff);
         count++;            // Keep track of how many
       }
