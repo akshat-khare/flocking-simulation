@@ -30,9 +30,8 @@ class Boid {
       getFriends();
     }
     flock();
-    println (move);
+    // println (move);
     pos.add(move);
-    //println (pos + " " + id);
   }
 
   void flock () {
@@ -40,12 +39,9 @@ class Boid {
     PVector separate = getSeparation(); 
     PVector avoidObjects =new PVector(0,0,0);
     if(environment == "box"){
-       println("avoid box being called -----------------------------------");
        avoidObjects = getAvoidWallsBox();
     }else if(environment == "sphere"){
-             println("avoid sphere being called -----------------------------------");
-
-      avoidObjects = getAvoidWallsSphere();
+       avoidObjects = getAvoidWallsSphere();
     }
     
     PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
@@ -254,12 +250,13 @@ class Boid {
     //float desiredseparation = 25.0f;
     PVector steer = pos.copy();
     float dist = pos.mag();
+    float radius = boundary * 0.866;
     steer.normalize();
     steer.mult(-1);
-    if(dist>boundary){
+    if(dist>radius){
       steer.mult(dist);
     }else{
-      steer.div(boundary - dist);
+      steer.div(radius - dist);
     }
     
     return steer;
@@ -322,7 +319,7 @@ class Boid {
     rotateY(move.y);
     rotateZ(move.z);
     stroke(0);
-    float t = 5*globalScale;
+    float t = 4*globalScale;
     // this pyramid has 4 sides, each drawn as a separate triangle
     // each side has 3 vertices, making up a triangle shape
     // the parameter " t " determines the size of the pyramid

@@ -41,12 +41,11 @@ void setup () {
   boids = new ArrayList<Boid>();
   avoids = new ArrayList<Avoid>();
   setupWalls();
-  //println(width);
   println(boundary + " is boundary");
   int id = 0;
   for (int i = 0; i < 200; i+= 1) {
       id = id + 1;
-      println("New Boid added with id:" +id);
+      // println("New Boid added with id:" +id);
       boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));
   }
   //boids.add(new Boid(boundary/4, 0, 0, 0));
@@ -56,12 +55,11 @@ void setup () {
 
 // haha
 void recalculateConstants () {
-  println("globalScale is " +globalScale);
   //stroke(150);
-  //text(globalScale, boundary/2, boundary/2 );
+  text(globalScale, boundary/2, boundary/2 );
   maxSpeed = 1.5 * globalScale;
-  friendRadius = 60 * globalScale;
-  crowdRadius = (friendRadius / 5);
+  friendRadius = 50 * globalScale;
+  crowdRadius = (friendRadius / 4);
   avoidRadius = 20 * globalScale;
   coheseRadius = friendRadius / 2;
   //println("maxspeed is " +maxSpeed);
@@ -75,7 +73,7 @@ void recalculateConstants () {
 
 
 void setupWalls() {
-  boundary = (int)(350 * globalScale);
+  boundary = (int)(400 * globalScale);
   box = new Boundary(boundary);
 }
 
@@ -112,7 +110,7 @@ void draw () {
   //} 
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
-    println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
+    // println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
     current.go();
     current.drawit();
   }
@@ -167,7 +165,6 @@ void keyPressed () {
     message("Turned noise " + on(option_noise));
   } else if (key == ',') {
     environment = "box";
-    boundary = boundary*3;
   } else if (key == '.') {
     environment = "sphere";
   }
