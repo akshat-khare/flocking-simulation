@@ -9,9 +9,21 @@ The boids move individually, but ahdering to some set of rules. The four most ba
 3. Cohesion: steer to move toward the average position (center of mass) of local flockmates.  
 4. Obstacle Avoidance: steer to move away from a obstacle in the way.  
 
+## Technologies Used
+Processing is a flexible software sketchbook that is used for rendering animations easily and interactively. The present project is also made on Processing.  
+The code can be used either by downloading Processing for your respective OS, or alternatively, an standalone Java application can be used as well.
+
+## Documentation
+The documentation, mathematical model and specification for the current project can be found in the /doc/ folder in the root repository folder.
+
 ## Authors  
 Akshat Khare [@akshat-khare][2]  
 Divyanshu Saxena [@DivyanshuSaxena][3]  
+
+## References
+1. Boid Flocking Simulation by Craig W. Reynolds: https://www.red3d.com/cwr/boids/  
+2. Processing 2D Flocking Simulation Example: https://processing.org/examples/flocking.html
+
 
 [1]: https://processing.org/
 [2]: https://github.com/akshat-khare/
