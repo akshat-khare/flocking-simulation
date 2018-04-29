@@ -315,9 +315,23 @@ class Boid {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
     //rotate(move.heading());
-    rotateX(move.x);
-    rotateY(move.y);
-    rotateZ(move.z);
+    float x = move.x;
+    float y = move.y;
+    float z = move.z;
+    float yangle = asin(x/sqrt(x*x + z*z));
+    float xangle = -asin(y/sqrt(y*y + z*z));
+    if(z>=0) {
+      // This is definitely correct.
+      //println("Z>0  "+random(10));
+      rotateY(yangle);
+      rotateX(xangle);
+    } else if (z<0) {
+      //println("Z<0  "+random(10));
+      rotateX(PI);
+      rotateY(yangle);
+      rotateX(-xangle);
+    }
+    //rotateY(-PI/2);
     stroke(0);
     float t = 5*globalScale;
     // this pyramid has 4 sides, each drawn as a separate triangle
