@@ -23,7 +23,7 @@ Divyanshu Saxena [@DivyanshuSaxena][3]
 ## References
 1. [Boid Flocking Simulation by Craig W. Reynolds][4]  
 2. [Processing 2D Flocking Simulation Example][5]  
-3. [In-formation Flocking Behaviour]
+3. [In-formation Flocking Behaviour][6]
 
 [1]: https://processing.org/
 [2]: https://github.com/akshat-khare/
