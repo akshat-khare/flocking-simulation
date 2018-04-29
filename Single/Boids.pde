@@ -131,7 +131,7 @@ void draw () {
   for (int i = 0; i <avoids.size(); i++) {
     Avoid current = avoids.get(i);
     current.go();
-    current.draw();
+    current.drawthi();
   }
 
   if (messageTimer > 0) {
