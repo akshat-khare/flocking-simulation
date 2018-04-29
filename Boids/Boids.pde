@@ -1,4 +1,4 @@
-int customframerate=600;
+int customframerate=60;
 Boid barry;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
@@ -35,12 +35,12 @@ int messageTimer = 0;
 String messageText = "";
 
 void settings  () {
-  size(1512, 894, P3D);
+  size(1800, 1000, P3D);
 }
 
 void setup () {
   frameRate(customframerate);
-  bg = loadImage("pansky.jpg");
+  bg = loadImage("data/pansky.jpg");
   imgfac = (bg.width * height )/bg.height;
   //bg.get(0,0,500,200);
   bg.resize((int) imgfac,height);
