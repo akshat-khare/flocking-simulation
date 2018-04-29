@@ -264,6 +264,7 @@ class Boid {
     popMatrix();
   }
   
+  // Draw function for individual character
   void drawit() {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
@@ -282,25 +283,25 @@ class Boid {
     fill(shade, 90, 200);
     vertex(-t, -t, -t);
     vertex( t, -t, -t);
-    vertex( 0, 0, t);
+    vertex( 0, 0, 2*t);
   
     //fill(0, 150, 0, 100);
     fill(shade, 90, 200);
     vertex( t, -t, -t);
     vertex( t, t, -t);
-    vertex( 0, 0, t);
+    vertex( 0, 0, 2*t);
   
     //fill(0, 0, 150, 100);
     fill(shade, 90, 200);
     vertex( t, t, -t);
     vertex(-t, t, -t);
-    vertex( 0, 0, t);
+    vertex( 0, 0, 2*t);
   
     //fill(150, 0, 150, 100);
     fill(shade, 90, 200);
     vertex(-t, t, -t);
     vertex(-t, -t, -t);
-    vertex( 0, 0, t);
+    vertex( 0, 0, 2*t);
   
     endShape();
     popMatrix();

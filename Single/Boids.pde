@@ -43,7 +43,7 @@ void setup () {
   //println(width);
   println(boundary + " is boundary");
   int id = 0;
-  for (int i = 0; i < 100; i+= 1) {
+  for (int i = 0; i < 200; i+= 1) {
       id = id + 1;
       println("New Boid added with id:" +id);
       boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));
@@ -63,13 +63,13 @@ void recalculateConstants () {
   crowdRadius = (friendRadius / 5);
   avoidRadius = 20 * globalScale;
   coheseRadius = friendRadius / 2;
-  println("maxspeed is " +maxSpeed);
-  println("friendradius is " +friendRadius);
-  println("crowdRadius is " +crowdRadius);
-  println("avoidRadius is " +avoidRadius);
-  println("coheseradius is " +coheseRadius);
-  println("width is " +width);
-  println("height is " +height);
+  //println("maxspeed is " +maxSpeed);
+  //println("friendradius is " +friendRadius);
+  //println("crowdRadius is " +crowdRadius);
+  //println("avoidRadius is " +avoidRadius);
+  //println("coheseradius is " +coheseRadius);
+  //println("width is " +width);
+  //println("height is " +height);
 }
 
 
@@ -101,14 +101,15 @@ void draw () {
   //fill(0, 100);
   //rect(0, 0, width, height);
   //println(tool);
-  if (tool == "erase") {
-    noFill();
-    stroke(0, 100, 260);
-    rect(mouseX - eraseRadius, mouseY - eraseRadius, eraseRadius * 2, eraseRadius *2);
-    if (mousePressed) {
-      erase();
-    }
-  } else if (tool == "avoids") {
+  //if (tool == "erase") {
+  //  noFill();
+  //  stroke(0, 100, 260);
+  //  rect(mouseX - eraseRadius, mouseY - eraseRadius, eraseRadius * 2, eraseRadius *2);
+  //  if (mousePressed) {
+  //    erase();
+  //  }
+  //} else 
+  if (tool == "avoids") {
     noStroke();
     fill(0, 200, 200);
     ellipse(mouseX, mouseY, 15, 15);
@@ -188,30 +189,30 @@ String on(boolean in) {
 void mousePressed () {
   switch (tool) {
   case "boids":
-    boids.add(new Boid(mouseX, mouseY, 0, boids.size()+1));
+    boids.add(new Boid(mouseX-(width/2), mouseY-(height/2), 0, boids.size()+1));
     message(boids.size() + " Total Boid" + s(boids.size()));
     break;
   case "avoids":
-    avoids.add(new Avoid(mouseX, mouseY, 0));
+    avoids.add(new Avoid(mouseX-(width/2), mouseY-(height/2), 0));
     break;
   }
 }
 
-void erase () {
-  for (int i = boids.size()-1; i > -1; i--) {
-    Boid b = boids.get(i);
-    if (abs(b.pos.x - mouseX) < eraseRadius && abs(b.pos.y - mouseY) < eraseRadius) {
-      boids.remove(i);
-    }
-  }
+//void erase () {
+//  for (int i = boids.size()-1; i > -1; i--) {
+//    Boid b = boids.get(i);
+//    if (abs(b.pos.x - mouseX) < eraseRadius && abs(b.pos.y - mouseY) < eraseRadius) {
+//      boids.remove(i);
+//    }
+//  }
 
-  for (int i = avoids.size()-1; i > -1; i--) {
-    Avoid b = avoids.get(i);
-    if (abs(b.pos.x - mouseX) < eraseRadius && abs(b.pos.y - mouseY) < eraseRadius) {
-      avoids.remove(i);
-    }
-  }
-}
+//  for (int i = avoids.size()-1; i > -1; i--) {
+//    Avoid b = avoids.get(i);
+//    if (abs(b.pos.x - mouseX) < eraseRadius && abs(b.pos.y - mouseY) < eraseRadius) {
+//      avoids.remove(i);
+//    }
+//  }
+//}
 
 void drawText (String s, float x, float y) {
   fill(0);
