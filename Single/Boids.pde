@@ -1,8 +1,10 @@
-int customframerate=60;
+int customframerate=600;
 Boid barry;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
 Boundary box;
+PImage bg;
+float imgfac = 0;
 
 float globalScale = .91;
 float eraseRadius = 20;
@@ -35,6 +37,11 @@ void settings  () {
 
 void setup () {
   frameRate(customframerate);
+  bg = loadImage("pansky.jpg");
+  imgfac = (bg.width * height )/bg.height;
+  //bg.get(0,0,500,200);
+  bg.resize((int) imgfac,height);
+  println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
   textSize(16);
   textAlign(CENTER,BOTTOM);
   recalculateConstants();

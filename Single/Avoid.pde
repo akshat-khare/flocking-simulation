@@ -9,11 +9,11 @@ class Avoid {
      
    }
    
-   void setup () {
-    stroke(255);
-    strokeWeight(1);
-    frameRate(customframerate);
-   }
+   //void setup () {
+   // stroke(255);
+   // strokeWeight(1);
+   // frameRate(customframerate);
+   //}
    
    void draw () {
      pushMatrix();
