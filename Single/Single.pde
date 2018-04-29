@@ -50,16 +50,16 @@ class Boid {
     align.mult(1.0);
     if (!option_friend) align.mult(0);
     
-    separate.mult(4.0);
+    separate.mult(10.0);
     if (!option_crowd) separate.mult(0);
     
-    avoidObjects.mult(3.0);
+    avoidObjects.mult(1.0);
     if (!option_avoid) avoidObjects.mult(0);
 
-    noise.mult(0.1);
+    noise.mult(0);
     if (!option_noise) noise.mult(0);
 
-    cohese.mult(0.01);
+    cohese.mult(0.002);
     if (!option_cohese) cohese.mult(0);
     
     stroke(0, 255, 160);
@@ -187,7 +187,7 @@ class Boid {
         plane[j] = planes[i][j];
       }
       float d = getDistance(pos, plane);
-      if ((d > 0) && (d < avoidRadius)) {
+      if ((d > 0) && (d < avoidWallRadius)) {
         // Calculate vector pointing away from the plane
         PVector targetPoint;
         if(plane[0]==1 || plane[0]==-1){

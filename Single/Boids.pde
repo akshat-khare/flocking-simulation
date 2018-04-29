@@ -15,6 +15,7 @@ float maxSpeed;
 float friendRadius;
 float crowdRadius;
 float avoidRadius;
+float avoidWallRadius;
 float coheseRadius;
 
 int boundary;
@@ -58,10 +59,11 @@ void recalculateConstants () {
   //stroke(150);
   text(globalScale, boundary/2, boundary/2 );
   maxSpeed = 1.5 * globalScale;
-  friendRadius = 50 * globalScale;
-  crowdRadius = (friendRadius / 4);
+  friendRadius = 40 * globalScale;
+  crowdRadius = (friendRadius / 2);
   avoidRadius = 20 * globalScale;
-  coheseRadius = friendRadius / 2;
+  avoidWallRadius = 80 * globalScale;
+  coheseRadius = 1.5 * friendRadius;
   //println("maxspeed is " +maxSpeed);
   //println("friendradius is " +friendRadius);
   //println("crowdRadius is " +crowdRadius);
@@ -168,7 +170,7 @@ void keyPressed () {
   } else if (key == '.') {
     environment = "sphere";
   }
-  //recalculateConstants();
+  recalculateConstants();
 }
 
 void drawGUI() {
