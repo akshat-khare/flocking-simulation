@@ -1,5 +1,6 @@
 class Boundary {
     int boundary;
+    int boundcount =0;
    
     Boundary (int b) {
       boundary = b;
@@ -7,15 +8,19 @@ class Boundary {
     
    void setup() {
     noFill();
-    stroke(255);
+    stroke(150);
     strokeWeight(1);
+    //frameRate(customframerate);
    }
    
-   void draw () {
+   void drawsur () {
+     boundcount++;
+     
       background(0);
       translate(width/2, height/2, 200);
       //rotateY(frameCount / 100.0); 
-      println (boundary);
-      box(boundary);  
+      //println (boundary+ "-----------------------------------------------------------------------------------------------" + boundcount);
+      box(boundary); 
+      //noLoop();
    }
 }

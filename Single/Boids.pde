@@ -1,3 +1,4 @@
+int customframerate=60;
 Boid barry;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
@@ -6,6 +7,7 @@ Boundary box;
 float globalScale = .91;
 float eraseRadius = 20;
 String tool = "boids";
+
 
 // boid control
 float maxSpeed;
@@ -31,29 +33,43 @@ void settings  () {
 }
 
 void setup () {
+  frameRate(customframerate);
   textSize(16);
   textAlign(CENTER,BOTTOM);
   recalculateConstants();
   boids = new ArrayList<Boid>();
   avoids = new ArrayList<Avoid>();
   setupWalls();
-  println(width);
-  println(boundary);
+  //println(width);
+  println(boundary + " is boundary");
   int id = 0;
-  for (int i = 0; i < 50; i+= 1) {
+  for (int i = 0; i < 10; i+= 1) {
       id = id + 1;
       println("New Boid added with id:" +id);
       boids.add(new Boid(random(-50,50), random(-50,50), random(-50,50), id));
   }
+  //boids.add(new Boid(boundary/4, 0, 0, 0));
+  //boids.add(new Boid(boundary/4 - 20, 0, 0, 1));
+  
 }
 
 // haha
 void recalculateConstants () {
-  maxSpeed = 0.75 * globalScale;
+  println("globalScale is " +globalScale);
+  //stroke(150);
+  //text(globalScale, boundary/2, boundary/2 );
+  maxSpeed = 10 * globalScale;
   friendRadius = 10 * globalScale;
   crowdRadius = (friendRadius / 2);
-  avoidRadius = 1.0 * globalScale;
-  coheseRadius = 2 * friendRadius;
+  avoidRadius = 10 * globalScale;
+  coheseRadius = friendRadius;
+  println("maxspeed is " +maxSpeed);
+  println("friendradius is " +friendRadius);
+  println("crowdRadius is " +crowdRadius);
+  println("avoidRadius is " +avoidRadius);
+  println("coheseradius is " +coheseRadius);
+  println("width is " +width);
+  println("height is " +height);
 }
 
 
@@ -78,13 +94,13 @@ void draw () {
   noFill();
   stroke(255);
   strokeWeight(1);  
-  box.draw();
+  box.drawsur();
 
   noStroke();
   colorMode(HSB);
   //fill(0, 100);
   //rect(0, 0, width, height);
-  
+  //println(tool);
   if (tool == "erase") {
     noFill();
     stroke(0, 100, 260);
@@ -99,9 +115,9 @@ void draw () {
   }
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
-    //println("Boid id: " + i + " " + current.id);
+    println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
     current.go();
-    current.draw();
+    current.drawit();
   }
 
   //println(avoids.size());
@@ -153,7 +169,7 @@ void keyPressed () {
   } else if (key == '.') {
     setupCircle();
   }
-  recalculateConstants();
+  //recalculateConstants();
 }
 
 void drawGUI() {

@@ -32,29 +32,29 @@ class Boid {
     flock();
     //println (move);
     pos.add(move);
-    println (pos + " " + id);
+    //println (pos + " " + id);
   }
 
   void flock () {
     PVector allign = getAverageDir();
     PVector avoidDir = getAvoidDir(); 
     PVector avoidObjects = getAvoidWalls();
-    PVector noise = new PVector(random(1) - 1, random(1) - 1, random(1) - 1);
+    PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
     PVector cohese = getCohesion();
 
     allign.mult(1.5);
     if (!option_friend) allign.mult(0);
     
-    avoidDir.mult(1.5);
+    avoidDir.mult(0.5);
     if (!option_crowd) avoidDir.mult(0);
     
-    avoidObjects.mult(5.0);
+    avoidObjects.mult(10.0);
     if (!option_avoid) avoidObjects.mult(0);
 
     noise.mult(0.1);
     if (!option_noise) noise.mult(0);
 
-    cohese.mult(1.0);
+    cohese.mult(1);
     if (!option_cohese) cohese.mult(0);
     
     stroke(0, 255, 160);
@@ -203,7 +203,8 @@ class Boid {
     }
     // Average -- divide by how many
     if (count > 0) {
-      steer.div((float)count);
+      //steer.div((float)count);
+      return steer;
     }
 
     // As long as the vector is greater than 0
@@ -265,7 +266,7 @@ class Boid {
     popMatrix();
   }
   
-  void draw() {
+  void drawit() {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
     //rotate(move.heading());
@@ -273,31 +274,31 @@ class Boid {
     rotateY(move.y);
     rotateZ(move.z);
     stroke(0);
-    float t = 7.5*globalScale;
+    float t = 5*globalScale;
     // this pyramid has 4 sides, each drawn as a separate triangle
     // each side has 3 vertices, making up a triangle shape
     // the parameter " t " determines the size of the pyramid
     beginShape(TRIANGLES);
   
-    fill(150, 0, 0, 100);
+    //fill(150, 0, 0, 100);
     fill(shade, 90, 200);
     vertex(-t, -t, -t);
     vertex( t, -t, -t);
     vertex( 0, 0, t);
   
-    fill(0, 150, 0, 100);
+    //fill(0, 150, 0, 100);
     fill(shade, 90, 200);
     vertex( t, -t, -t);
     vertex( t, t, -t);
     vertex( 0, 0, t);
   
-    fill(0, 0, 150, 100);
+    //fill(0, 0, 150, 100);
     fill(shade, 90, 200);
     vertex( t, t, -t);
     vertex(-t, t, -t);
     vertex( 0, 0, t);
   
-    fill(150, 0, 150, 100);
+    //fill(150, 0, 150, 100);
     fill(shade, 90, 200);
     vertex(-t, t, -t);
     vertex(-t, -t, -t);
@@ -313,8 +314,10 @@ class Boid {
   }
 
   void wrap () {
-    pos.x = (pos.x + width) % width;
-    pos.y = (pos.y + height) % height;
-    pos.z = (pos.z + height) % height;
+    //println("wrap was called");
+    pos.x = (pos.x) % 500;
+    pos.y = (pos.y) % 500;
+    println("after wrap x and y are "+pos.x + " " + pos.y);
+    //pos.z = (pos.z + height) % height;
   }
 }
