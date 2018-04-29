@@ -1,8 +1,11 @@
-int customframerate=60;
+int customframerate=600;
 Boid barry;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
 Boundary box;
+PImage bg;
+volatile PImage tempbg;
+float imgfac = 0;
 
 float globalScale = 1.13;
 float eraseRadius = 20;
@@ -37,6 +40,12 @@ void settings  () {
 
 void setup () {
   frameRate(customframerate);
+  bg = loadImage("pansky.jpg");
+  imgfac = (bg.width * height )/bg.height;
+  //bg.get(0,0,500,200);
+  bg.resize((int) imgfac,height);
+  tempbg = bg.get(0,0,width, height);
+  println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
   textSize(16);
   textAlign(CENTER,BOTTOM);
   recalculateConstants();
@@ -92,7 +101,7 @@ void draw () {
   fill(0);
   text("mouse at : (" + mouseX + "," + mouseY +")" ,mouseX, mouseY-25);
   
-  background(0);
+  //background(0);
   noFill();
   stroke(255);
   strokeWeight(1);  
@@ -122,7 +131,7 @@ void draw () {
   for (int i = 0; i <avoids.size(); i++) {
     Avoid current = avoids.get(i);
     current.go();
-    current.draw();
+    current.drawthi();
   }
 
   if (messageTimer > 0) {
@@ -147,12 +156,6 @@ void keyPressed () {
   } else if (key == '1') {
     option_friend = option_friend ? false : true;
     message("Turned friend allignment " + on(option_friend));
-  } else if (key == 'p') {
-    noLoop();
-  } else if (key == 's') {
-    redraw();
-  } else if (key == 'c') {
-    loop();
   } else if (key == '2') {
     option_crowd = option_crowd ? false : true;
     message("Turned crowding avoidance " + on(option_crowd));
@@ -171,8 +174,17 @@ void keyPressed () {
     environment = "sphere";
   } else if (key == 'r') {
     rotate = (rotate+1)%2;
-  } 
+  } else if (key == 'p') {
+    noLoop();
+  } else if (key == 's') {
+    redraw();
+  } else if (key == 'c') {
+    //println("key was pressed");
+    loop();
+  }
+  //println("calling recalculate");
   recalculateConstants();
+  //println("recalculate called");
 }
 
 void drawGUI() {
