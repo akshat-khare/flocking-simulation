@@ -108,12 +108,7 @@ void draw () {
   //  if (mousePressed) {
   //    erase();
   //  }
-  //} else 
-  if (tool == "avoids") {
-    noStroke();
-    fill(0, 200, 200);
-    ellipse(mouseX, mouseY, 15, 15);
-  }
+  //} 
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
     println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
@@ -193,7 +188,15 @@ void mousePressed () {
     message(boids.size() + " Total Boid" + s(boids.size()));
     break;
   case "avoids":
-    avoids.add(new Avoid(mouseX-(width/2), mouseY-(height/2), 0));
+    float xcoor = mouseX-(width/2);
+    float ycoor = mouseY-(height/2);
+    if (xcoor > (boundary/2) || xcoor < (-boundary/2)) {
+      xcoor = abs(xcoor) % boundary;
+    }
+    if (ycoor > (boundary/2) || ycoor < (-boundary/2)) {
+      ycoor = abs(ycoor) % boundary;
+    }
+    avoids.add(new Avoid(xcoor, ycoor, random(-100,100)));
     break;
   }
 }

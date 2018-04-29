@@ -16,8 +16,10 @@ class Avoid {
    }
    
    void draw () {
+     pushMatrix();
      fill(0, 255, 200);
      translate(pos.x, pos.y, pos.z);
      box(10);  
+     popMatrix();
    }
 }
