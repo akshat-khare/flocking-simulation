@@ -21,10 +21,13 @@ Akshat Khare [@akshat-khare][2]
 Divyanshu Saxena [@DivyanshuSaxena][3]  
 
 ## References
-1. Boid Flocking Simulation by Craig W. Reynolds: https://www.red3d.com/cwr/boids/  
-2. Processing 2D Flocking Simulation Example: https://processing.org/examples/flocking.html
-
+1. [Boid Flocking Simulation by Craig W. Reynolds][4]  
+2. [Processing 2D Flocking Simulation Example][5]  
+3. [In-formation Flocking Behaviour][6]
 
 [1]: https://processing.org/
 [2]: https://github.com/akshat-khare/
 [3]: https://github.com/DivyanshuSaxena/
+[4]: https://www.red3d.com/cwr/boids/
+[5]: https://processing.org/examples/flocking.html
+[6]: https://pdfs.semanticscholar.org/ea6d/3c59ef1166baeb0679aef553df6ebf7765c7.pdf
