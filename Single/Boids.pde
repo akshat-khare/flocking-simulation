@@ -1,4 +1,4 @@
-int customframerate=600;
+int customframerate=60;
 Boid barry;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
@@ -31,7 +31,7 @@ boolean option_noise = true;
 boolean option_cohese = true;
 
 // gui crap
-int messageTimer = 0;
+float messageTimer = 0;
 String messageText = "";
 
 void settings  () {
@@ -54,7 +54,7 @@ void setup () {
   setupWalls();
   println(boundary + " is boundary");
   int id = 0;
-  for (int i = 0; i < 200; i+= 1) {
+  for (int i = 0; i < 1; i+= 1) {
       id = id + 1;
       // println("New Boid added with id:" +id);
       boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));
@@ -99,7 +99,6 @@ void setupCircle() {
 
 void draw () {
   fill(0);
-  text("mouse at : (" + mouseX + "," + mouseY +")" ,mouseX, mouseY-25);
   
   //background(0);
   noFill();
@@ -109,17 +108,6 @@ void draw () {
 
   noStroke();
   colorMode(HSB);
-  //fill(0, 100);
-  //rect(0, 0, width, height);
-  //println(tool);
-  //if (tool == "erase") {
-  //  noFill();
-  //  stroke(0, 100, 260);
-  //  rect(mouseX - eraseRadius, mouseY - eraseRadius, eraseRadius * 2, eraseRadius *2);
-  //  if (mousePressed) {
-  //    erase();
-  //  }
-  //} 
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
     // println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
@@ -190,8 +178,7 @@ void keyPressed () {
 void drawGUI() {
   if (messageTimer > 0) {
     fill((min(30, messageTimer) / 30.0) * 255.0);
-
-    text(messageText, 10, height - 20);
+    text(messageText, boundary/2, boundary/2);
   }
 }
 
@@ -206,17 +193,25 @@ String on(boolean in) {
 void mousePressed () {
   switch (tool) {
   case "boids":
-    boids.add(new Boid(mouseX-(width/2), mouseY-(height/2), 0, boids.size()+1));
-    message(boids.size() + " Total Boid" + s(boids.size()));
-    break;
-  case "avoids":
     float xcoor = mouseX-(width/2);
     float ycoor = mouseY-(height/2);
     if (xcoor > (boundary/2) || xcoor < (-boundary/2)) {
-      xcoor = abs(xcoor) % boundary;
+      xcoor = (abs(xcoor)) % (boundary/2);
     }
     if (ycoor > (boundary/2) || ycoor < (-boundary/2)) {
-      ycoor = abs(ycoor) % boundary;
+      ycoor = (abs(ycoor)) % (boundary/2);
+    }
+    boids.add(new Boid(xcoor, ycoor, random(-100,100), boids.size()+1));
+    message(boids.size() + " Total Boids");
+    break;
+  case "avoids":
+    xcoor = mouseX-(width/2);
+    ycoor = mouseY-(height/2);
+    if (xcoor > (boundary/2) || xcoor < (-boundary/2)) {
+      xcoor = abs(xcoor) % (boundary/2);
+    }
+    if (ycoor > (boundary/2) || ycoor < (-boundary/2)) {
+      ycoor = abs(ycoor) % (boundary/2);
     }
     avoids.add(new Avoid(xcoor, ycoor, random(-100,100)));
     break;
@@ -239,15 +234,18 @@ void mousePressed () {
 //  }
 //}
 
-void drawText (String s, float x, float y) {
-  fill(0);
-  text(s, x, y);
-  fill(200);
-  text(s, x-1, y-1);
-}
+//void drawText (String s, float x, float y) {
+//  float textx = x-(width/2);
+//  float texty = y-(height/2);
+//  fill(200);
+//  text(s, boundary/2, boundary/2);
+//  //fill(200);
+//  //text(s,  boundary/2-1, boundary/2-1);
+//}
 
 
 void message (String in) {
   messageText = in;
   messageTimer = (int) frameRate * 3;
+  //drawText(messageText,0,0);
 }

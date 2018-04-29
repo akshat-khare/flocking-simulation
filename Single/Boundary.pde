@@ -31,16 +31,16 @@ class Boundary {
      //println("size of to be rendered image is " + tryme.width +" "+ tryme.height + " width is " + width);
      //tryme.resize(width,height);
      if(frameCount%10==1){
-       tempbg = bg.get(thiwid,0,width, height);
+       //tempbg = bg.get(thiwid,0,width, height);
        begwid++;
        //background(tryme);
      }
      //thread("changeBackground");
-     background(tempbg);
+     //background(tempbg);
      //begwid++;
      
      //background(bg.get(thiwid,0,width, height));
-     //background(0);
+     background(0);
      //image(bg,-thiwid,0,-thiwid+width, height);
      
       //background(0);
