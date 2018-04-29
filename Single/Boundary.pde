@@ -19,7 +19,12 @@ class Boundary {
       background(0);
       translate(width/2, height/2, 200);
       rotateY(frameCount / 100.0); 
-      box(boundary); 
+      if(environment == "box"){
+        box(boundary);
+      }else if(environment == "sphere"){
+        //boundary = boundary;
+        sphere(boundary);
+      } 
       //noLoop();
    }
 }

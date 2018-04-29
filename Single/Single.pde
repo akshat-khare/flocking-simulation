@@ -38,7 +38,16 @@ class Boid {
   void flock () {
     PVector align = getAlignment();
     PVector separate = getSeparation(); 
-    PVector avoidObjects = getAvoidWalls();
+    PVector avoidObjects =new PVector(0,0,0);
+    if(environment == "box"){
+       println("avoid box being called -----------------------------------");
+       avoidObjects = getAvoidWallsBox();
+    }else if(environment == "sphere"){
+             println("avoid sphere being called -----------------------------------");
+
+      avoidObjects = getAvoidWallsSphere();
+    }
+    
     PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
     PVector cohese = getCohesion();
 
@@ -169,7 +178,7 @@ class Boid {
   }
   
   // Avoid Walls (to be improved)
-  PVector getAvoidWalls () {
+  PVector getAvoidWallsBox () {
     //float desiredseparation = 25.0f;
     PVector steer = new PVector(0, 0, 0);
     int count = 0;
@@ -211,7 +220,7 @@ class Boid {
         }
         diff.normalize();
         if(isout){
-          diff.mult(100*d);
+          diff.mult(100 * pos.mag());
         }else{
           diff.div(d);
         }
@@ -227,19 +236,37 @@ class Boid {
     }
 
     // As long as the vector is greater than 0
-    if (steer.mag() > 0) {
-      // First two lines of code below could be condensed with new PVector setMag() method
-      // Not using this method until Processing.js catches up
-      // steer.setMag(maxspeed);
+    //if (steer.mag() > 0) {
+    //  // First two lines of code below could be condensed with new PVector setMag() method
+    //  // Not using this method until Processing.js catches up
+    //  // steer.setMag(maxspeed);
 
-      // Implement Reynolds: Steering = Desired - Velocity
-      steer.normalize();
-      steer.mult(maxSpeed);
-      steer.sub(move);
-      steer.limit(maxSpeed);
-    }
+    //  // Implement Reynolds: Steering = Desired - Velocity
+    //  steer.normalize();
+    //  steer.mult(maxSpeed);
+    //  steer.sub(move);
+    //  steer.limit(maxSpeed);
+    //}
     return steer;
   }
+  
+    PVector getAvoidWallsSphere () {
+    //float desiredseparation = 25.0f;
+    PVector steer = pos.copy();
+    float dist = pos.mag();
+    steer.normalize();
+    steer.mult(-1);
+    if(dist>boundary){
+      steer.mult(dist);
+    }else{
+      steer.div(boundary - dist);
+    }
+    
+    return steer;
+    
+  }
+  
+  
   
   PVector getCohesion () {
    //float neighbordist = 50;
