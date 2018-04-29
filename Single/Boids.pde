@@ -67,7 +67,7 @@ void setup () {
 // haha
 void recalculateConstants () {
   //stroke(150);
-  text(globalScale, boundary/2, boundary/2 );
+  //text(globalScale, boundary/2, boundary/2 );
   maxSpeed = 1.5 * globalScale;
   friendRadius = 40 * globalScale;
   crowdRadius = (friendRadius / 2);
@@ -179,9 +179,12 @@ void keyPressed () {
   } else if (key == 's') {
     redraw();
   } else if (key == 'c') {
+    //println("key was pressed");
     loop();
   }
+  //println("calling recalculate");
   recalculateConstants();
+  //println("recalculate called");
 }
 
 void drawGUI() {
