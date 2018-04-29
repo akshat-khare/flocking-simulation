@@ -43,10 +43,10 @@ void setup () {
   //println(width);
   println(boundary + " is boundary");
   int id = 0;
-  for (int i = 0; i < 10; i+= 1) {
+  for (int i = 0; i < 100; i+= 1) {
       id = id + 1;
       println("New Boid added with id:" +id);
-      boids.add(new Boid(random(-50,50), random(-50,50), random(-50,50), id));
+      boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));
   }
   //boids.add(new Boid(boundary/4, 0, 0, 0));
   //boids.add(new Boid(boundary/4 - 20, 0, 0, 1));
@@ -58,11 +58,11 @@ void recalculateConstants () {
   println("globalScale is " +globalScale);
   //stroke(150);
   //text(globalScale, boundary/2, boundary/2 );
-  maxSpeed = 10 * globalScale;
-  friendRadius = 10 * globalScale;
-  crowdRadius = (friendRadius / 2);
-  avoidRadius = 10 * globalScale;
-  coheseRadius = friendRadius;
+  maxSpeed = 1.5 * globalScale;
+  friendRadius = 60 * globalScale;
+  crowdRadius = (friendRadius / 5);
+  avoidRadius = 20 * globalScale;
+  coheseRadius = friendRadius / 2;
   println("maxspeed is " +maxSpeed);
   println("friendradius is " +friendRadius);
   println("crowdRadius is " +crowdRadius);
@@ -74,7 +74,7 @@ void recalculateConstants () {
 
 
 void setupWalls() {
-  boundary = (int)(300 * globalScale);
+  boundary = (int)(350 * globalScale);
   box = new Boundary(boundary);
 }
 
@@ -140,9 +140,6 @@ void keyPressed () {
   } else if (key == 'w') {
     tool = "avoids";
     message("Place obstacles");
-  } else if (key == 'e') {
-    tool = "erase";
-    message("Eraser");
   } else if (key == '-') {
     message("Decreased scale");
     globalScale *= 0.8;  

@@ -30,37 +30,37 @@ class Boid {
       getFriends();
     }
     flock();
-    //println (move);
+    println (move);
     pos.add(move);
     //println (pos + " " + id);
   }
 
   void flock () {
-    PVector allign = getAverageDir();
-    PVector avoidDir = getAvoidDir(); 
+    PVector align = getAlignment();
+    PVector separate = getSeparation(); 
     PVector avoidObjects = getAvoidWalls();
     PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
     PVector cohese = getCohesion();
 
-    allign.mult(1.5);
-    if (!option_friend) allign.mult(0);
+    align.mult(1.0);
+    if (!option_friend) align.mult(0);
     
-    avoidDir.mult(0.5);
-    if (!option_crowd) avoidDir.mult(0);
+    separate.mult(4.0);
+    if (!option_crowd) separate.mult(0);
     
-    avoidObjects.mult(10.0);
+    avoidObjects.mult(3.0);
     if (!option_avoid) avoidObjects.mult(0);
 
     noise.mult(0.1);
     if (!option_noise) noise.mult(0);
 
-    cohese.mult(1);
+    cohese.mult(0.01);
     if (!option_cohese) cohese.mult(0);
     
     stroke(0, 255, 160);
 
-    move.add(allign);
-    move.add(avoidDir);
+    move.add(align);
+    move.add(separate);
     move.add(avoidObjects);
     move.add(noise);
     move.add(cohese);
@@ -103,8 +103,8 @@ class Boid {
     return total / (float) count;
   }
 
-  PVector getAverageDir () {
-    PVector sum = new PVector(0, 0);
+  PVector getAlignment () {
+    PVector sum = new PVector(0, 0, 0);
     int count = 0;
 
     for (Boid other : friends) {
@@ -117,14 +117,14 @@ class Boid {
         sum.add(copy);
         count++;
       }
-      if (count > 0) {
-        sum.div((float)count);
-      }
+    }
+    if (count > 0) {
+      sum.div((float)count);
     }
     return sum;
   }
 
-  PVector getAvoidDir() {
+  PVector getSeparation() {
     PVector steer = new PVector(0, 0);
     int count = 0;
 
@@ -139,9 +139,6 @@ class Boid {
         steer.add(diff);
         count++;            // Keep track of how many
       }
-    }
-    if (count > 0) {
-      steer.div((float) count);
     }
     return steer;
   }
@@ -203,8 +200,8 @@ class Boid {
     }
     // Average -- divide by how many
     if (count > 0) {
-      //steer.div((float)count);
-      return steer;
+      steer.div((float)count);
+      //return steer;
     }
 
     // As long as the vector is greater than 0
@@ -245,6 +242,7 @@ class Boid {
     }
   }
 
+  // Redundant Draw function
   void drawr () {
     for ( int i = 0; i < friends.size(); i++) {
       stroke(90);
