@@ -2,7 +2,8 @@ class Boundary {
     int boundary;
     int boundcount =0;
     float begwid =0;
-    PImage tryme;
+    //volatile PImage tryme = bg.get(0,0,width, height);
+    int thiwid = 0;
    
     Boundary (int b) {
       boundary = b;
@@ -14,7 +15,9 @@ class Boundary {
    // //strokeWeight(1);
    // //frameRate(customframerate);
    //}
-   
+   public void changeBackground(){
+     tempbg = bg.get(thiwid,0,width, height);
+   }
    void drawsur () {
      
      boundcount++;
@@ -23,17 +26,19 @@ class Boundary {
        println("exceeded " + begwid);
        begwid = 0;
      }
-     int thiwid = (int) (begwid*width)/1256;
+     thiwid = (int) (begwid*width)/1256;
      //tryme = bg.get(thiwid,0,width, height);
      //println("size of to be rendered image is " + tryme.width +" "+ tryme.height + " width is " + width);
      //tryme.resize(width,height);
      if(frameCount%10==1){
-       tryme = bg.get(thiwid,0,width, height);
+       tempbg = bg.get(thiwid,0,width, height);
        begwid++;
        //background(tryme);
      }
-     background(tryme);
-     //background(tryme);
+     //thread("changeBackground");
+     background(tempbg);
+     //begwid++;
+     
      //background(bg.get(thiwid,0,width, height));
      //background(0);
      //image(bg,-thiwid,0,-thiwid+width, height);

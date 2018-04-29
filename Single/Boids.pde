@@ -4,6 +4,7 @@ ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
 Boundary box;
 PImage bg;
+volatile PImage tempbg;
 float imgfac = 0;
 
 float globalScale = .91;
@@ -41,6 +42,7 @@ void setup () {
   imgfac = (bg.width * height )/bg.height;
   //bg.get(0,0,500,200);
   bg.resize((int) imgfac,height);
+  tempbg = bg.get(0,0,width, height);
   println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
   textSize(16);
   textAlign(CENTER,BOTTOM);
@@ -96,7 +98,7 @@ void draw () {
   fill(0);
   text("mouse at : (" + mouseX + "," + mouseY +")" ,mouseX, mouseY-25);
   
-  background(0);
+  //background(0);
   noFill();
   stroke(255);
   strokeWeight(1);  
