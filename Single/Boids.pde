@@ -6,8 +6,9 @@ Boundary box;
 
 float globalScale = .91;
 float eraseRadius = 20;
+int rotate = 1;
 String tool = "boids";
-String environment = "box";
+String environment = "sphere";
 
 
 // boid control
@@ -15,6 +16,7 @@ float maxSpeed;
 float friendRadius;
 float crowdRadius;
 float avoidRadius;
+float avoidWallRadius;
 float coheseRadius;
 
 int boundary;
@@ -58,10 +60,11 @@ void recalculateConstants () {
   //stroke(150);
   text(globalScale, boundary/2, boundary/2 );
   maxSpeed = 1.5 * globalScale;
-  friendRadius = 50 * globalScale;
-  crowdRadius = (friendRadius / 4);
+  friendRadius = 40 * globalScale;
+  crowdRadius = (friendRadius / 2);
   avoidRadius = 20 * globalScale;
-  coheseRadius = friendRadius / 2;
+  avoidWallRadius = 80 * globalScale;
+  coheseRadius = 1.5 * friendRadius;
   //println("maxspeed is " +maxSpeed);
   //println("friendradius is " +friendRadius);
   //println("crowdRadius is " +crowdRadius);
@@ -144,14 +147,7 @@ void keyPressed () {
   } else if (key == '1') {
     option_friend = option_friend ? false : true;
     message("Turned friend allignment " + on(option_friend));
-  }else if (key == 'p'){
-    noLoop();
-  } else if(key == 's'){
-    redraw();
-  } else if(key == 'c'){
-    loop();
-  }
-    else if (key == '2') {
+  } else if (key == '2') {
     option_crowd = option_crowd ? false : true;
     message("Turned crowding avoidance " + on(option_crowd));
   } else if (key == '3') {
@@ -167,8 +163,16 @@ void keyPressed () {
     environment = "box";
   } else if (key == '.') {
     environment = "sphere";
+  } else if (key == 'r') {
+    rotate = (rotate+1)%2;
+  } else if (key == 'p') {
+    noLoop();
+  } else if (key == 's') {
+    redraw();
+  } else if (key == 'c') {
+    loop();
   }
-  //recalculateConstants();
+  recalculateConstants();
 }
 
 void drawGUI() {
