@@ -45,7 +45,7 @@ void setup () {
   int id = 0;
   for (int i = 0; i < 200; i+= 1) {
       id = id + 1;
-      println("New Boid added with id:" +id);
+      // println("New Boid added with id:" +id);
       boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));
   }
   //boids.add(new Boid(boundary/4, 0, 0, 0));
@@ -111,7 +111,7 @@ void draw () {
   //} 
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
-    println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
+    //println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
     current.go();
     current.drawit();
   }
