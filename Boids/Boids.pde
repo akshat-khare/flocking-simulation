@@ -54,7 +54,7 @@ void setup () {
   setupWalls();
   println(boundary + " is boundary");
   int id = 0;
-  for (int i = 0; i < 1; i+= 1) {
+  for (int i = 0; i < 1000; i+= 1) {
       id = id + 1;
       // println("New Boid added with id:" +id);
       boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));

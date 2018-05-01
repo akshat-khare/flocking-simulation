@@ -333,7 +333,7 @@ class Boid {
     }
     //rotateY(-PI/2);
     stroke(0);
-    float t = 5*globalScale;
+    float t = 2.5*globalScale;
     // this pyramid has 4 sides, each drawn as a separate triangle
     // each side has 3 vertices, making up a triangle shape
     // the parameter " t " determines the size of the pyramid
