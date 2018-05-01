@@ -16,6 +16,21 @@ Besides, the following rules are also implemented for a more real simulation:
 ## Usage
 1. The standalone applications for major Operating Systems can be found in the /Boids/ folder in the respective application.* folder.  
 2. Besides, Processing can be downloaded from the [official website][7]. Once installed, any .pde file in the Boids/ can be opened and the application can be run from the top left icon.
+### Functionalities
+Key ',' -> Change Boundary to Cube.  
+Key '.' -> Change Boundary to Sphere.  
+Key '-' -> Decrease Scale (Size).
+Key '=' -> Increase Scale (Size).  
+Key 'E' -> Enable/Disable Energy Effect. 
+Key 'P' -> Pause Simulation.  
+Key 'S' -> Run the Simulation Frame by Frame.  
+Key 'C' -> Continue Simulation.  
+Key 'B' followed by click -> Add Boids.  
+Key 'A' followed by click -> Add Obstacles.  
+Key '1' -> Enable/Disable Alignment Rule.  
+Key '2' -> Enable/Disable Separation Rule.  
+Key '3' -> Enable/Disable Cohesion Rule.  
+Key '4' -> Enable/Disable Obstacle Avoidance Rule.  
 
 ## Technologies Used
 Processing is a flexible software sketchbook that is used for rendering animations easily and interactively. The present project is also made on Processing.  
@@ -25,8 +40,8 @@ The code can be used either by downloading Processing for your respective OS, or
 The documentation, mathematical model and specification for the current project can be found in the /doc/ folder in the root repository folder.
 
 ## Authors  
-Akshat Khare [@akshat-khare][2]  
-Divyanshu Saxena [@DivyanshuSaxena][3]  
+[Akshat Khare][2]  
+[Divyanshu Saxena][3]  
 
 ## References
 1. [Boid Flocking Simulation by Craig W. Reynolds][4]  
