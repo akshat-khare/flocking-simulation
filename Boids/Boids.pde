@@ -1,5 +1,4 @@
 int customframerate=60;
-Boid barry;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
 Boundary box;
@@ -13,7 +12,6 @@ int rotate = 1;
 String tool = "boids";
 String environment = "sphere";
 
-
 // boid control
 float maxSpeed;
 float friendRadius;
@@ -23,6 +21,7 @@ float avoidWallRadius;
 float coheseRadius;
 
 int boundary;
+int currentBoid;
 
 boolean option_friend = true;
 boolean option_crowd = true;
@@ -54,20 +53,16 @@ void setup () {
   setupWalls();
   println(boundary + " is boundary");
   int id = 0;
-  for (int i = 0; i < 1000; i+= 1) {
+  for (int i = 0; i < 2000; i+= 1) {
       id = id + 1;
       // println("New Boid added with id:" +id);
       boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));
   }
-  //boids.add(new Boid(boundary/4, 0, 0, 0));
-  //boids.add(new Boid(boundary/4 - 20, 0, 0, 1));
-  
+  currentBoid = 0;  
 }
 
-// haha
 void recalculateConstants () {
   //stroke(150);
-  //text(globalScale, boundary/2, boundary/2 );
   maxSpeed = 1.5 * globalScale;
   friendRadius = 40 * globalScale;
   crowdRadius = (friendRadius / 2);
@@ -111,21 +106,31 @@ void draw () {
   for (int i = 0; i <boids.size(); i++) {
     Boid current = boids.get(i);
     // println("Boid id: " + i + " " + current.id + " is at "+ current.pos.x +" "+current.pos.y + " " + current.pos.z + " velocity is " + current.move.x + " " + current.move.y + " " + current.move.z );
-    current.go();
-    current.drawit();
+    currentBoid = i;
+    //println(currentBoid + " " + random(10));
+    //thread("calcSingle");
+    current.moveBoid();
+    current.drawBoid();
   }
 
-  //println(avoids.size());
   for (int i = 0; i <avoids.size(); i++) {
     Avoid current = avoids.get(i);
     current.go();
-    current.drawthi();
+    current.drawAvoid();
   }
 
   if (messageTimer > 0) {
     messageTimer -= 1;
   }
   drawGUI();
+}
+
+void calcSingle () {
+  //println(currentBoid);
+  Boid boid = boids.get(currentBoid);
+  currentBoid = (currentBoid+1)%1000;
+  boid.moveBoid();
+  return;
 }
 
 void keyPressed () {

@@ -21,16 +21,13 @@ class Boid {
     shade = random(255);
     friends = new ArrayList<Boid>();
   }
-
-  void go () {
+  
+  void moveBoid () {
     increment();
-    //wrap(); //to be included
     if (thinkTimer == 0 ) {
-      // update our friend array (lots of square roots)
       getFriends();
     }
     flock();
-    // println (move);
     pos.add(move);
   }
 
@@ -87,6 +84,10 @@ class Boid {
         abs(test.pos.z - this.pos.z) < friendRadius ) {
         nearby.add(test);
       }
+      // Restrict Number of Friends
+      //if (i==200) {
+      //  break;
+      //}
     }
     friends = nearby;
   }
@@ -231,18 +232,6 @@ class Boid {
       //return steer;
     }
 
-    // As long as the vector is greater than 0
-    //if (steer.mag() > 0) {
-    //  // First two lines of code below could be condensed with new PVector setMag() method
-    //  // Not using this method until Processing.js catches up
-    //  // steer.setMag(maxspeed);
-
-    //  // Implement Reynolds: Steering = Desired - Velocity
-    //  steer.normalize();
-    //  steer.mult(maxSpeed);
-    //  steer.sub(move);
-    //  steer.limit(maxSpeed);
-    //}
     return steer;
   }
   
@@ -258,11 +247,8 @@ class Boid {
     }else{
       steer.div(radius - dist);
     }
-    
-    return steer;
-    
+    return steer;  
   }
-  
   
   
   PVector getCohesion () {
@@ -311,7 +297,7 @@ class Boid {
   }
   
   // Draw function for individual character
-  void drawit() {
+  void drawBoid() {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
     //rotate(move.heading());
@@ -364,7 +350,7 @@ class Boid {
     vertex( 0, 0, 2*t);
   
     endShape();
-    popMatrix();
+    popMatrix(); 
   }
 
   // update all those timers!

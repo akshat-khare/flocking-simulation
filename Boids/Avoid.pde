@@ -15,7 +15,7 @@ class Avoid {
    // frameRate(customframerate);
    //}
    
-   void drawthi () {
+   void drawAvoid () {
      pushMatrix();
      fill(0, 255, 200);
      translate(pos.x, pos.y, pos.z);
