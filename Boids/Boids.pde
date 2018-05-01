@@ -7,13 +7,13 @@ volatile PImage tempbg;
 float imgfac = 0;
 
 float globalScale = 1.13;
-float eraseRadius = 20;
+float thresholdEnergy = 30;
+float energyFactor = 0.2;
 int rotate = 1;
 String tool = "boids";
 String environment = "sphere";
 
 // boid control
-float maxSpeed;
 float friendRadius;
 float crowdRadius;
 float avoidRadius;
@@ -28,6 +28,7 @@ boolean option_crowd = true;
 boolean option_avoid = true;
 boolean option_noise = true;
 boolean option_cohese = true;
+boolean option_energy = false;
 
 // gui crap
 float messageTimer = 0;
@@ -63,7 +64,6 @@ void setup () {
 
 void recalculateConstants () {
   //stroke(150);
-  maxSpeed = 1.5 * globalScale;
   friendRadius = 40 * globalScale;
   crowdRadius = (friendRadius / 2);
   avoidRadius = 20 * globalScale;
@@ -134,10 +134,10 @@ void calcSingle () {
 }
 
 void keyPressed () {
-  if (key == 'q') {
+  if (key == 'b') {
     tool = "boids";
     message("Add boids");
-  } else if (key == 'w') {
+  } else if (key == 'a') {
     tool = "avoids";
     message("Place obstacles");
   } else if (key == '-') {
@@ -158,9 +158,12 @@ void keyPressed () {
   } else if (key == '4') {
     option_cohese = option_cohese ? false : true;
     message("Turned cohesion " + on(option_cohese));
-  } else if (key == '5') {
+  } else if (key == 'n') {
     option_noise = option_noise ? false : true;
     message("Turned noise " + on(option_noise));
+  } else if (key == 'e') {
+    option_energy = option_energy ? false : true;
+    message("Turned energy effect " + on(option_energy));
   } else if (key == ',') {
     environment = "box";
   } else if (key == '.') {

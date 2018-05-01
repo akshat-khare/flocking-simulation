@@ -5,6 +5,8 @@ class Boid {
   float shade;
   int id;
   ArrayList<Boid> friends;
+  float maxSpeed;
+  float energy;
 
   // timers
   int thinkTimer = 0;
@@ -15,6 +17,8 @@ class Boid {
     pos.y = yy;
     pos.z = zz;
     id = ii;
+    maxSpeed = 1.5 * globalScale;
+    energy = 100;
     float angle = random(TWO_PI);
     move = new PVector(cos(angle), sin(angle), cos(angle));
     thinkTimer = int(random(10));
@@ -35,6 +39,7 @@ class Boid {
     PVector align = getAlignment();
     PVector separate = getSeparation(); 
     PVector avoidObjects =new PVector(0,0,0);
+    
     if(environment == "box"){
        avoidObjects = getAvoidWallsBox();
     }else if(environment == "sphere"){
@@ -68,6 +73,16 @@ class Boid {
     move.add(cohese);
 
     move.limit(maxSpeed);
+    
+    if (option_energy) {
+      if (move.y > 0) {
+        energy += 1.5;
+      } else {
+        energy -= 1.5;
+      }
+      PVector energyEffect = getEnergy();
+      move.add(energyEffect);
+    }
     
     shade += getAverageColor() * 0.03;
     shade += (random(2) - 1) ;
@@ -272,6 +287,14 @@ class Boid {
     else {
       return new PVector(0, 0, 0);
     }
+  }
+  
+  PVector getEnergy() {
+    PVector steer = new PVector(0,0,0);
+    if (energy < thresholdEnergy) {
+      steer.y += energyFactor * (thresholdEnergy - energy);
+    }
+    return steer;
   }
 
   // Redundant Draw function
