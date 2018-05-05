@@ -11,13 +11,21 @@ class Boid {
   // timers
   int thinkTimer = 0;
 
+  // Hyper Parameters
+  float SPEEDFACTOR = 1.5;
+  float ALIGNMULT = 1.0;
+  float SEPARATEMULT = 7.5;
+  float AVOIDMULT = 1.0;
+  float NOISEMULT = 0.1;
+  float COHESEMULT = 0.002;
+
   Boid (float xx, float yy, float zz, int ii) {
     pos = new PVector(0, 0, 0);
     pos.x = xx;
     pos.y = yy;
     pos.z = zz;
     id = ii;
-    maxSpeed = 1.5 * globalScale;
+    maxSpeed = SPEEDFACTOR * globalScale;
     energy = 100;
     float angle = random(TWO_PI);
     move = new PVector(cos(angle), sin(angle), cos(angle));
@@ -49,19 +57,19 @@ class Boid {
     PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
     PVector cohese = getCohesion();
 
-    align.mult(1.0);
+    align.mult(ALIGNMULT);
     if (!option_friend) align.mult(0);
     
-    separate.mult(7.5);
+    separate.mult(SEPARATEMULT);
     if (!option_crowd) separate.mult(0);
     
-    avoidObjects.mult(1.0);
+    avoidObjects.mult(AVOIDMULT);
     if (!option_avoid) avoidObjects.mult(0);
 
-    noise.mult(0.1);
+    noise.mult(NOISEMULT);
     if (!option_noise) noise.mult(0);
 
-    cohese.mult(0.002);
+    cohese.mult(COHESEMULT);
     if (!option_cohese) cohese.mult(0);
     
     stroke(0, 255, 160);

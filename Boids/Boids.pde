@@ -24,12 +24,11 @@ float avoidRadius;
 float avoidWallRadius;
 float coheseRadius;
 
-// Adjusted Parameters
-//friendRadius = 40 * globalScale;
-//crowdRadius = (friendRadius / 2);
-//avoidRadius = 20 * globalScale;
-//avoidWallRadius = 80 * globalScale;
-//coheseRadius = 1.5 * friendRadius;
+// Hyper Parameters
+float FRIENDFACTOR = 40;
+float CROWDFACTOR = 20;
+float AVOIDFACTOR = 20;
+float WALLFACTOR = 80;
 
 int boundary;
 int currentBoid;
@@ -76,10 +75,10 @@ void setup () {
 
 void recalculateConstants () {
   //stroke(150);
-  friendRadius = 40 * globalScale;
-  crowdRadius = (friendRadius / 2);
-  avoidRadius = 20 * globalScale;
-  avoidWallRadius = 80 * globalScale;
+  friendRadius = FRIENDFACTOR * globalScale;
+  crowdRadius = CROWDFACTOR * globalScale;
+  avoidRadius = AVOIDFACTOR * globalScale;
+  avoidWallRadius = WALLFACTOR * globalScale;
   coheseRadius = 1.5 * friendRadius;
   //println("maxspeed is " +maxSpeed);
   //println("friendradius is " +friendRadius);
@@ -92,7 +91,7 @@ void recalculateConstants () {
 
 
 void setupWalls() {
-  boundary = (int)(450 * globalScale);
+  boundary = (int)(550 * globalScale);
   box = new Boundary(boundary);
 }
 
