@@ -49,6 +49,7 @@ void settings  () {
 }
 
 void setup () {
+  //setup
   cam = new PeasyCam(this,(double) width/2,(double) height/2,(double) 200, (double) 700);
   frameRate(customframerate);
   bg = loadImage("data/pansky.jpg");
