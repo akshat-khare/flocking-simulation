@@ -52,13 +52,13 @@ class Boid {
     align.mult(1.0);
     if (!option_friend) align.mult(0);
     
-    separate.mult(10.0);
+    separate.mult(7.5);
     if (!option_crowd) separate.mult(0);
     
     avoidObjects.mult(1.0);
     if (!option_avoid) avoidObjects.mult(0);
 
-    noise.mult(0);
+    noise.mult(0.1);
     if (!option_noise) noise.mult(0);
 
     cohese.mult(0.002);
@@ -99,10 +99,6 @@ class Boid {
         abs(test.pos.z - this.pos.z) < friendRadius ) {
         nearby.add(test);
       }
-      // Restrict Number of Friends
-      //if (i==200) {
-      //  break;
-      //}
     }
     friends = nearby;
   }
@@ -271,11 +267,11 @@ class Boid {
     PVector sum = new PVector(0, 0, 0);   // Start with empty vector to accumulate all locations
     int count = 0;
     for (Boid other : friends) {
-      float d = PVector.dist(pos, other.pos);
-      if ((d > 0) && (d < coheseRadius)) {  
+      //float d = PVector.dist(pos, other.pos);
+      //if ((d > 0) && (d < coheseRadius)) {  
         sum.add(other.pos); // Add location
         count++;
-      }
+      //}
     }
     if (count > 0) {
       sum.div(count);
