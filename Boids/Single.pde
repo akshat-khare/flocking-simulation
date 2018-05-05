@@ -14,10 +14,10 @@ class Boid {
   // Hyper Parameters
   float SPEEDFACTOR = 1.5;
   float ALIGNMULT = 1.0;
-  float SEPARATEMULT = 7.5;
+  float SEPARATEMULT = 10.0;
   float AVOIDMULT = 1.0;
   float NOISEMULT = 0.1;
-  float COHESEMULT = 0.002;
+  float COHESEMULT = 0.005;
 
   Boid (float xx, float yy, float zz, int ii) {
     pos = new PVector(0, 0, 0);
@@ -275,11 +275,11 @@ class Boid {
     PVector sum = new PVector(0, 0, 0);   // Start with empty vector to accumulate all locations
     int count = 0;
     for (Boid other : friends) {
-      //float d = PVector.dist(pos, other.pos);
-      //if ((d > 0) && (d < coheseRadius)) {  
+      float d = PVector.dist(pos, other.pos);
+      if ((d > 0) && (d < coheseRadius)) {  
         sum.add(other.pos); // Add location
         count++;
-      //}
+      }
     }
     if (count > 0) {
       sum.div(count);

@@ -25,7 +25,7 @@ float avoidWallRadius;
 float coheseRadius;
 
 // Hyper Parameters
-float FRIENDFACTOR = 40;
+float FRIENDFACTOR = 45;
 float CROWDFACTOR = 20;
 float AVOIDFACTOR = 20;
 float WALLFACTOR = 80;
