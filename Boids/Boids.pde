@@ -10,7 +10,7 @@ float imgfac = 0;
 import peasy.PeasyCam;
 PeasyCam cam;
 
-float globalScale = 1.13;
+float globalScale = 0.83;
 float thresholdEnergy = 30;
 float energyFactor = 0.2;
 int rotate = 1;
@@ -23,6 +23,13 @@ float crowdRadius;
 float avoidRadius;
 float avoidWallRadius;
 float coheseRadius;
+
+// Adjusted Parameters
+//friendRadius = 40 * globalScale;
+//crowdRadius = (friendRadius / 2);
+//avoidRadius = 20 * globalScale;
+//avoidWallRadius = 80 * globalScale;
+//coheseRadius = 1.5 * friendRadius;
 
 int boundary;
 int currentBoid;
@@ -85,7 +92,7 @@ void recalculateConstants () {
 
 
 void setupWalls() {
-  boundary = (int)(350 * globalScale);
+  boundary = (int)(450 * globalScale);
   box = new Boundary(boundary);
 }
 
