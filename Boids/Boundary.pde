@@ -15,9 +15,7 @@ class Boundary {
    // //strokeWeight(1);
    // //frameRate(customframerate);
    //}
-   public void changeBackground(){
-     tempbg = bg.get(thiwid,0,width, height);
-   }
+   
    void drawsur () {
      
      boundcount++;
@@ -27,20 +25,20 @@ class Boundary {
        begwid = 0;
      }
      thiwid = (int) (begwid*width)/1256;
-     //tryme = bg.get(thiwid,0,width, height);
+     startwid = thiwid;
+     //tempbg = bg.get(thiwid,0,width, height);
      //println("size of to be rendered image is " + tryme.width +" "+ tryme.height + " width is " + width);
      //tryme.resize(width,height);
-     if(frameCount%10==1){
-       //tempbg = bg.get(thiwid,0,width, height);
-       begwid++;
-       //background(tryme);
-     }
-     //thread("changeBackground");
-     //background(tempbg);
-     //begwid++;
+     //if(frameCount%2==1){
+     //  tempbg = bg.get(thiwid,0,width, height);
+     //  begwid++;
+     //  //background(tryme);
+     //}
+     
+     begwid++;
      
      //background(bg.get(thiwid,0,width, height));
-     background(0);
+     //background(0);
      //image(bg,-thiwid,0,-thiwid+width, height);
      
       //background(0);

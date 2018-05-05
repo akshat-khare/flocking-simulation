@@ -4,7 +4,12 @@ ArrayList<Avoid> avoids;
 Boundary box;
 PImage bg;
 volatile PImage tempbg;
+volatile PImage threadbg;
+ArrayList< PImage> imagelist = new ArrayList<PImage>();
 float imgfac = 0;
+int startwid =0;
+volatile boolean finished = false;
+int looper=1;
 
 //peasy cam
 import peasy.PeasyCam;
@@ -51,13 +56,30 @@ void settings  () {
 
 void setup () {
   //setup
+  
   cam = new PeasyCam(this,(double) width/2,(double) height/2,(double) 200, (double) 700);
   frameRate(customframerate);
   bg = loadImage("data/pansky.jpg");
   imgfac = (bg.width * height )/bg.height;
   //bg.get(0,0,500,200);
   bg.resize((int) imgfac,height);
+  boolean finis = false;
+  int bgcount = 0;
+  while(!finis){
+    PImage temp = bg.get(bgcount,0, width,height);
+    imagelist.add(temp);
+    if(bgcount + width>= bg.width){
+      finis= true;
+      break;
+    }else{
+      bgcount= bgcount +16;
+    }
+  }
+  println("size of imagelist is "+imagelist.size());
+  
   tempbg = bg.get(0,0,width, height);
+  threadbg = bg.get(0,0,width, height);
+  background(tempbg);
   println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
   textSize(16);
   textAlign(CENTER,BOTTOM);
@@ -73,8 +95,44 @@ void setup () {
       boids.add(new Boid(random(-100,100), random(-100,100), random(-100,100), id));
   }
   currentBoid = 0;  
+  PImage stacktemp;
+  for(int i=0;i<imagelist.size();i++){
+    stacktemp = imagelist.get(i);
+  }
 }
-
+void changeBack1(){
+  //if(frameCount%1==0){
+  //  threadbg = bg.get(startwid,0,width, height);
+  //}
+  println("thread called at " + frameCount + " at time " + millis());
+  threadbg = bg.get(startwid/3,0,width, height);
+  //delay(1000);
+  
+  //tempbg = threadbg.copy();
+  finished =true;
+}
+void changeBack2(){
+  //if(frameCount%1==0){
+  //  threadbg = bg.get(startwid,0,width, height);
+  //}
+  println("thread called at " + frameCount + " at time " + millis());
+  threadbg = bg.get(startwid/3,0,width, height);
+  //delay(1000);
+  
+  //tempbg = threadbg.copy();
+  finished =true;
+}
+void changeBack3(){
+  //if(frameCount%1==0){
+  //  threadbg = bg.get(startwid,0,width, height);
+  //}
+  println("thread called at " + frameCount + " at time " + millis());
+  threadbg = bg.get(startwid/3,0,width, height);
+  //delay(1000);
+  
+  //tempbg = threadbg.copy();
+  finished =true;
+}
 void recalculateConstants () {
   //stroke(150);
   friendRadius = 40 * globalScale;
@@ -111,7 +169,29 @@ void draw () {
   
   
   //peasy end
+  if(frameCount%3==0){
+    thread("changeBack1");
+  }
+  //else if(frameCount%3==1){
+  //  thread("changeBack2");
+  //}else if(frameCount%3==2){
+  //  thread("changeBack3");
+  //}
   
+   //changeBack();
+   println("finished is " + finished + "at frameCount "+frameCount + " time "+millis());
+   if(!finished){
+     //background(threadbg);
+   }else{
+     //background(threadbg);
+     //tempbg = threadbg;
+     finished = false;
+   }
+   if(frameCount>imagelist.size()){
+     looper = 3;
+   }
+   background(imagelist.get((frameCount/looper)%(imagelist.size() ) ));
+   println("bg made and finished is " + finished + "at frameCount "+frameCount + " time "+millis());
   
   fill(0);
   
