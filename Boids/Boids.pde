@@ -6,6 +6,10 @@ PImage bg;
 volatile PImage tempbg;
 float imgfac = 0;
 
+//peasy cam
+import peasy.PeasyCam;
+PeasyCam cam;
+
 float globalScale = 1.13;
 float thresholdEnergy = 30;
 float energyFactor = 0.2;
@@ -39,6 +43,7 @@ void settings  () {
 }
 
 void setup () {
+  cam = new PeasyCam(this,(double) width/2,(double) height/2,(double) 200, (double) 700);
   frameRate(customframerate);
   bg = loadImage("data/pansky.jpg");
   imgfac = (bg.width * height )/bg.height;
@@ -93,6 +98,13 @@ void setupCircle() {
 }
 
 void draw () {
+  
+  //peasy try
+  
+  
+  //peasy end
+  
+  
   fill(0);
   
   //background(0);
