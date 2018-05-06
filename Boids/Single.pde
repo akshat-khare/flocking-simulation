@@ -159,6 +159,7 @@ class Boid {
       if ((d > 0) && (d < crowdRadius)) {
         // Calculate vector pointing away from neighbor
         PVector diff = PVector.sub(pos, other.pos);
+        //diff = diff.mult((PVector.dot(diff, move))/20);
         diff.normalize();
         diff.div(d);        // Weight by distance
         steer.add(diff);
@@ -276,6 +277,7 @@ class Boid {
     int count = 0;
     for (Boid other : friends) {
       float d = PVector.dist(pos, other.pos);
+      
       if ((d > 0) && (d < coheseRadius)) {  
         sum.add(other.pos); // Add location
         count++;
@@ -301,27 +303,7 @@ class Boid {
     return steer;
   }
 
-  // Redundant Draw function
-  void drawr () {
-    for ( int i = 0; i < friends.size(); i++) {
-      stroke(90);
-      //line(this.pos.x, this.pos.y, f.pos.x, f.pos.y);
-    }
-    noStroke();
-    fill(shade, 90, 200);
-    pushMatrix();
-    translate(pos.x, pos.y, pos.z);
-    //rotate(move.heading());
-    rotateX(move.x);
-    rotateY(move.y);
-    rotateZ(move.z);
-    beginShape();
-    vertex(15 * globalScale, 0);
-    vertex(-7* globalScale, 7* globalScale);
-    vertex(-7* globalScale, -7* globalScale);
-    endShape(CLOSE);
-    popMatrix();
-  }
+
   
   // Draw function for individual character
   void drawBoid() {
@@ -346,10 +328,12 @@ class Boid {
     }
     //rotateY(-PI/2);
     stroke(0);
+    float t2 = 0.75*globalScale;
     float t = 2.5*globalScale;
     // this pyramid has 4 sides, each drawn as a separate triangle
     // each side has 3 vertices, making up a triangle shape
     // the parameter " t " determines the size of the pyramid
+    if(boidshape== "pyramid"){
     beginShape(TRIANGLES);
   
     //fill(150, 0, 0, 100);
@@ -377,7 +361,28 @@ class Boid {
     vertex( 0, 0, 2*t);
   
     endShape();
-    popMatrix(); 
+    }
+    if(boidshape == "triangle"){
+      beginShape(TRIANGLES);
+    fill(shade, 90, 200);
+    
+    //body
+    vertex(0, 0, -6*t2);
+    vertex(0, 3*t2, -20*t2);
+    vertex(0, 0, 8*t2);
+    
+    vertex(0, 0.5*t2, -8*t2);
+    vertex(-6*t2,((frameCount/2)%6 -3)*t2, -2*t2);
+    vertex(0, 0, 4*t2);
+    
+    vertex(0, 0, 4*t2);
+    vertex(6*t2, ((frameCount/2)%6 -3)*t2, -2*t2);
+    vertex(0, 0.5*t2, -8*t2);
+    //popMatrix();
+    endShape();
+     
+    }
+    popMatrix();
   }
 
   // update all those timers!
