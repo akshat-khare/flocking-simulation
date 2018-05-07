@@ -39,7 +39,7 @@ boolean option_avoid = true;
 boolean option_noise = true;
 boolean option_cohese = true;
 boolean option_energy = false;
-
+String boidshape = "triangle";
 // gui crap
 float messageTimer = 0;
 String messageText = "";
@@ -196,6 +196,13 @@ void keyPressed () {
   } else if (key == 'c') {
     //println("key was pressed");
     loop();
+  } else if(key =='t'){
+    if(boidshape =="pyramid"){
+      boidshape = "triangle";
+    }else{
+      boidshape = "pyramid";
+    }
+    
   }
   //println("calling recalculate");
   recalculateConstants();
