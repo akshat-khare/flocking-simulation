@@ -46,12 +46,13 @@ class Boid {
   void flock () {
     PVector align = getAlignment();
     PVector separate = getSeparation(); 
-    PVector avoidObjects =new PVector(0,0,0);
+    PVector avoidObjects = avoidAvoids(); 
+    PVector avoidWalls =new PVector(0,0,0);
     
     if(environment == "box"){
-       avoidObjects = getAvoidWallsBox();
-    }else if(environment == "sphere"){
-       avoidObjects = getAvoidWallsSphere();
+       avoidWalls = getAvoidWallsBox();
+    }else{
+       avoidWalls = getAvoidWallsSphere();
     }
     
     PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
@@ -65,6 +66,9 @@ class Boid {
     
     avoidObjects.mult(AVOIDMULT);
     if (!option_avoid) avoidObjects.mult(0);
+
+    avoidWalls.mult(AVOIDMULT);
+    if (!option_avoid) avoidWalls.mult(0);
 
     noise.mult(NOISEMULT);
     if (!option_noise) noise.mult(0);
@@ -168,7 +172,7 @@ class Boid {
     return steer;
   }
 
-  PVector getAvoidAvoids() {
+  PVector avoidAvoids() {
     PVector steer = new PVector(0, 0, 0);
     //int count = 0;
 
