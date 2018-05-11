@@ -61,9 +61,10 @@
 		\normalfont  {IIT Delhi}
 		\\ [2.0cm]
 		\HRule{0.5pt} \\
-		\LARGE \textbf{\uppercase{Mathematical Model of a Flocking Simulation Software }}
+		\LARGE \textbf{\uppercase{Mathematical Model of a Flocking Simulation Software}} \\[2pt]
+        \large \textbf{\uppercase{(For the Starlings Murmuration)}}
 		\HRule{2pt} \\ [0.5cm]
-		\normalsize \today \vspace*{5\baselineskip}}
+		\normalsize \date{7 May, 2018} \vspace*{5\baselineskip}}
 
 \date{}
 
@@ -88,7 +89,7 @@
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
 % \lipsum
-We have to design and implement a software for Boid Flocking Simulation. Boids is an artificial life program, developed by Craig Reynolds in 1986, which simulates the flocking behaviour of birds.
+We have to design and implement a software for Boid Flocking Simulation. Boids is an artificial life program, developed by Craig Reynolds in 1986, which simulates the flocking behaviour of birds. In our particular case, we are aiming to develop the simulation for the starlings murmuration.
 The software should have the following functionalities:
 \begin{enumerate}
 \item It should be able to approximate the flocking of starlings with some rules, that will form the model.
@@ -97,10 +98,6 @@ The software should have the following functionalities:
 \end{enumerate}
 
 The remaining document contains the rules formulated for the model, mathematical model of the rules and other algorithmic optimisations.
-
-
-
-
 
 \newpage
 \section*{Flocking Rules}
@@ -270,7 +267,8 @@ Next step was to try multi-threading. The software used for the current project 
 \subsection*{Energy Considerations}
 \addcontentsline{toc}{subsection}{Energy Considerations}
 To get a sense of correctness of the simulation, it was necessary to get a measure to quantify the movement of the boids. The energy of a boid was found to be a good measure to do so. The boid, under the influence of gravity must try to move in a direction perpendicular to the force of gravity. 
-
+\newline
+For this, the boids must lose energy when moving upwards and gain some energy when moving downwards. This loss in energy is implemented by the loss in velocity (or move) of the boid. This way, the effect of energy shall be more pronounced.
 
 \newpage
 \section*{References}
@@ -278,6 +276,9 @@ To get a sense of correctness of the simulation, it was necessary to get a measu
 \begin{enumerate}
 \item  \textbf{Flocks, Herd and Schools: A Distributed Behaviour} \\
 Boids - Background and Update by Craig Reynolds
+
+\item  \textbf{Boids: Pseudocode} \\
+Boids Pseudocode by Conrad Parker. \emph{kfish.org}
 \end{enumerate}
 
 

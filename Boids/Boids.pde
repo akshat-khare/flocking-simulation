@@ -28,7 +28,7 @@ float coheseRadius;
 float FRIENDFACTOR = 45;
 float CROWDFACTOR = 20;
 float AVOIDFACTOR = 20;
-float WALLFACTOR = 80;
+float WALLFACTOR = 40;
 
 int boundary;
 int currentBoid;
@@ -105,15 +105,7 @@ void setupCircle() {
 }
 
 void draw () {
-  
-  //peasy try
-  
-  
-  //peasy end
-  
-  
   fill(0);
-  
   //background(0);
   noFill();
   stroke(255);
