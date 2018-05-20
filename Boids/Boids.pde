@@ -2,8 +2,8 @@ int customframerate=60;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
 Boundary box;
-PImage bg;
-volatile PImage tempbg;
+//PImage bg;
+//volatile PImage tempbg;
 float imgfac = 0;
 
 //peasy cam
@@ -52,12 +52,12 @@ void setup () {
   //setup
   cam = new PeasyCam(this,(double) width/2,(double) height/2,(double) 200, (double) 700);
   frameRate(customframerate);
-  bg = loadImage("data/pansky.jpg");
-  imgfac = (bg.width * height )/bg.height;
+  //bg = loadImage("data/pansky.jpg");
+  //imgfac = (bg.width * height )/bg.height;
   //bg.get(0,0,500,200);
-  bg.resize((int) imgfac,height);
-  tempbg = bg.get(0,0,width, height);
-  println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
+  //bg.resize((int) imgfac,height);
+  //tempbg = bg.get(0,0,width, height);
+  //println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
   textSize(16);
   textAlign(CENTER,BOTTOM);
   recalculateConstants();

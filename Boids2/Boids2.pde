@@ -2,8 +2,8 @@ int customframerate=60;
 ArrayList<Boid> boids;
 ArrayList<Avoid> avoids;
 Boundary box;
-PImage bg;
-volatile PImage tempbg;
+//PImage bg;
+//volatile PImage tempbg;
 float imgfac = 0;
 
 //peasy cam
@@ -24,12 +24,11 @@ float avoidRadius;
 float avoidWallRadius;
 float coheseRadius;
 
-// Adjusted Parameters
-//friendRadius = 40 * globalScale;
-//crowdRadius = (friendRadius / 2);
-//avoidRadius = 20 * globalScale;
-//avoidWallRadius = 80 * globalScale;
-//coheseRadius = 1.5 * friendRadius;
+// Hyper Parameters
+float FRIENDFACTOR = 45;
+float CROWDFACTOR = 20;
+float AVOIDFACTOR = 20;
+float WALLFACTOR = 40;
 
 int boundary;
 int currentBoid;
@@ -40,7 +39,7 @@ boolean option_avoid = true;
 boolean option_noise = true;
 boolean option_cohese = true;
 boolean option_energy = false;
-
+String boidshape = "triangle";
 // gui crap
 float messageTimer = 0;
 String messageText = "";
@@ -53,12 +52,12 @@ void setup () {
   //setup
   cam = new PeasyCam(this,(double) width/2,(double) height/2,(double) 200, (double) 700);
   frameRate(customframerate);
-  bg = loadImage("https://img00.deviantart.net/d9a0/i/2012/208/8/7/panoramic_sky_by_zedlord89-d58rw31.jpg");
-  imgfac = (bg.width * height )/bg.height;
+  //bg = loadImage("data/pansky.jpg");
+  //imgfac = (bg.width * height )/bg.height;
   //bg.get(0,0,500,200);
-  bg.resize((int) imgfac,height);
-  tempbg = bg.get(0,0,width, height);
-  println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
+  //bg.resize((int) imgfac,height);
+  //tempbg = bg.get(0,0,width, height);
+  //println("width and height are " + width + " " +height + " finimage width and height are " + bg.width + " " + bg.height);
   textSize(16);
   textAlign(CENTER,BOTTOM);
   recalculateConstants();
@@ -77,10 +76,10 @@ void setup () {
 
 void recalculateConstants () {
   //stroke(150);
-  friendRadius = 40 * globalScale;
-  crowdRadius = (friendRadius / 2);
-  avoidRadius = 20 * globalScale;
-  avoidWallRadius = 80 * globalScale;
+  friendRadius = FRIENDFACTOR * globalScale;
+  crowdRadius = CROWDFACTOR * globalScale;
+  avoidRadius = AVOIDFACTOR * globalScale;
+  avoidWallRadius = WALLFACTOR * globalScale;
   coheseRadius = 1.5 * friendRadius;
   //println("maxspeed is " +maxSpeed);
   //println("friendradius is " +friendRadius);
@@ -93,7 +92,7 @@ void recalculateConstants () {
 
 
 void setupWalls() {
-  boundary = (int)(450 * globalScale);
+  boundary = (int)(550 * globalScale);
   box = new Boundary(boundary);
 }
 
@@ -106,15 +105,7 @@ void setupCircle() {
 }
 
 void draw () {
-  
-  //peasy try
-  
-  
-  //peasy end
-  
-  
   fill(0);
-  
   //background(0);
   noFill();
   stroke(255);
@@ -197,6 +188,13 @@ void keyPressed () {
   } else if (key == 'c') {
     //println("key was pressed");
     loop();
+  } else if(key =='t'){
+    if(boidshape =="pyramid"){
+      boidshape = "triangle";
+    }else{
+      boidshape = "pyramid";
+    }
+    
   }
   //println("calling recalculate");
   recalculateConstants();
@@ -277,6 +275,8 @@ void message (String in) {
   messageTimer = (int) frameRate * 3;
   //drawText(messageText,0,0);
 }
+
+//Avoid class
 class Avoid {
   PVector pos;
    
@@ -302,6 +302,10 @@ class Avoid {
      popMatrix();
    }
 }
+
+
+//Boundary class
+
 class Boundary {
     int boundary;
     int boundcount =0;
@@ -320,25 +324,25 @@ class Boundary {
    // //frameRate(customframerate);
    //}
    public void changeBackground(){
-     tempbg = bg.get(thiwid,0,width, height);
+     //tempbg = bg.get(thiwid,0,width, height);
    }
    void drawsur () {
      
      boundcount++;
      //float begwid = (frameCount%(1256))/1256;
-     if((begwid/1256) * width + width >bg.width || begwid >=1256){
-       println("exceeded " + begwid);
-       begwid = 0;
-     }
-     thiwid = (int) (begwid*width)/1256;
+     //if((begwid/1256) * width + width >bg.width || begwid >=1256){
+     //  println("exceeded " + begwid);
+     //  begwid = 0;
+     //}
+     //thiwid = (int) (begwid*width)/1256;
      //tryme = bg.get(thiwid,0,width, height);
      //println("size of to be rendered image is " + tryme.width +" "+ tryme.height + " width is " + width);
      //tryme.resize(width,height);
-     if(frameCount%10==1){
-       //tempbg = bg.get(thiwid,0,width, height);
-       begwid++;
-       //background(tryme);
-     }
+     //if(frameCount%10==1){
+     //  //tempbg = bg.get(thiwid,0,width, height);
+     //  begwid++;
+     //  //background(tryme);
+     //}
      //thread("changeBackground");
      //background(tempbg);
      //begwid++;
@@ -362,6 +366,8 @@ class Boundary {
       //noLoop();
    }
 }
+
+// Single class
 class Boid {
   // main fields
   PVector pos;
@@ -375,13 +381,22 @@ class Boid {
   // timers
   int thinkTimer = 0;
 
+  // Hyper Parameters
+  float SPEEDFACTOR = 1.5;
+  float ALIGNMULT = 1.0;
+  float SEPARATEMULT = 10.0;
+  float AVOIDMULT = 1.0;
+  float NOISEMULT = 0.1;
+  float COHESEMULT = 0.005;
+  int MAXFRIENDS = 7;
+
   Boid (float xx, float yy, float zz, int ii) {
     pos = new PVector(0, 0, 0);
     pos.x = xx;
     pos.y = yy;
     pos.z = zz;
     id = ii;
-    maxSpeed = 1.5 * globalScale;
+    maxSpeed = SPEEDFACTOR * globalScale;
     energy = 100;
     float angle = random(TWO_PI);
     move = new PVector(cos(angle), sin(angle), cos(angle));
@@ -402,30 +417,34 @@ class Boid {
   void flock () {
     PVector align = getAlignment();
     PVector separate = getSeparation(); 
-    PVector avoidObjects =new PVector(0,0,0);
+    PVector avoidObjects = avoidAvoids(); 
+    PVector avoidWalls =new PVector(0,0,0);
     
     if(environment == "box"){
-       avoidObjects = getAvoidWallsBox();
-    }else if(environment == "sphere"){
-       avoidObjects = getAvoidWallsSphere();
+       avoidWalls = getAvoidWallsBox();
+    }else{
+       avoidWalls = getAvoidWallsSphere();
     }
     
     PVector noise = new PVector(random(2) - 1, random(2) - 1, random(2) - 1);
     PVector cohese = getCohesion();
 
-    align.mult(1.0);
+    align.mult(ALIGNMULT);
     if (!option_friend) align.mult(0);
     
-    separate.mult(7.5);
+    separate.mult(SEPARATEMULT);
     if (!option_crowd) separate.mult(0);
     
-    avoidObjects.mult(1.0);
+    avoidObjects.mult(AVOIDMULT);
     if (!option_avoid) avoidObjects.mult(0);
 
-    noise.mult(0.1);
+    avoidWalls.mult(AVOIDMULT);
+    if (!option_avoid) avoidWalls.mult(0);
+
+    noise.mult(NOISEMULT);
     if (!option_noise) noise.mult(0);
 
-    cohese.mult(0.002);
+    cohese.mult(COHESEMULT);
     if (!option_cohese) cohese.mult(0);
     
     stroke(0, 255, 160);
@@ -433,6 +452,7 @@ class Boid {
     move.add(align);
     move.add(separate);
     move.add(avoidObjects);
+    move.add(avoidWalls);
     move.add(noise);
     move.add(cohese);
 
@@ -463,6 +483,9 @@ class Boid {
         abs(test.pos.z - this.pos.z) < friendRadius ) {
         nearby.add(test);
       }
+      //if (i==MAXFRIENDS) {
+      //  break;
+      //}
     }
     friends = nearby;
   }
@@ -515,6 +538,7 @@ class Boid {
       if ((d > 0) && (d < crowdRadius)) {
         // Calculate vector pointing away from neighbor
         PVector diff = PVector.sub(pos, other.pos);
+        //diff = diff.mult((PVector.dot(diff, move))/20);
         diff.normalize();
         diff.div(d);        // Weight by distance
         steer.add(diff);
@@ -524,7 +548,7 @@ class Boid {
     return steer;
   }
 
-  PVector getAvoidAvoids() {
+  PVector avoidAvoids() {
     PVector steer = new PVector(0, 0, 0);
     //int count = 0;
 
@@ -631,11 +655,12 @@ class Boid {
     PVector sum = new PVector(0, 0, 0);   // Start with empty vector to accumulate all locations
     int count = 0;
     for (Boid other : friends) {
-      //float d = PVector.dist(pos, other.pos);
-      //if ((d > 0) && (d < coheseRadius)) {  
+      float d = PVector.dist(pos, other.pos);
+      
+      if ((d > 0) && (d < coheseRadius)) {  
         sum.add(other.pos); // Add location
         count++;
-      //}
+      }
     }
     if (count > 0) {
       sum.div(count);
@@ -657,27 +682,7 @@ class Boid {
     return steer;
   }
 
-  // Redundant Draw function
-  void drawr () {
-    for ( int i = 0; i < friends.size(); i++) {
-      stroke(90);
-      //line(this.pos.x, this.pos.y, f.pos.x, f.pos.y);
-    }
-    noStroke();
-    fill(shade, 90, 200);
-    pushMatrix();
-    translate(pos.x, pos.y, pos.z);
-    //rotate(move.heading());
-    rotateX(move.x);
-    rotateY(move.y);
-    rotateZ(move.z);
-    beginShape();
-    vertex(15 * globalScale, 0);
-    vertex(-7* globalScale, 7* globalScale);
-    vertex(-7* globalScale, -7* globalScale);
-    endShape(CLOSE);
-    popMatrix();
-  }
+
   
   // Draw function for individual character
   void drawBoid() {
@@ -702,10 +707,12 @@ class Boid {
     }
     //rotateY(-PI/2);
     stroke(0);
+    float t2 = 0.9*globalScale;
     float t = 2.5*globalScale;
     // this pyramid has 4 sides, each drawn as a separate triangle
     // each side has 3 vertices, making up a triangle shape
     // the parameter " t " determines the size of the pyramid
+    if(boidshape== "pyramid"){
     beginShape(TRIANGLES);
   
     //fill(150, 0, 0, 100);
@@ -733,7 +740,28 @@ class Boid {
     vertex( 0, 0, 2*t);
   
     endShape();
-    popMatrix(); 
+    }
+    if(boidshape == "triangle"){
+      beginShape(TRIANGLES);
+    fill(shade, 90, 200);
+    
+    //body
+    vertex(0, 0, -6*t2);
+    vertex(0, 3*t2, -20*t2);
+    vertex(0, 0, 8*t2);
+    
+    vertex(0, 0.5*t2, -4*t2);
+    vertex(-6*t2,((frameCount/2)%6 -3)*t2, -2*t2);
+    vertex(0, 0, 2*t2);
+    
+    vertex(0, 0, 2*t2);
+    vertex(6*t2, ((frameCount/2)%6 -3)*t2, -2*t2);
+    vertex(0, 0.5*t2, -4*t2);
+    //popMatrix();
+    endShape();
+     
+    }
+    popMatrix();
   }
 
   // update all those timers!
